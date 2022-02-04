@@ -1,0 +1,141 @@
+
+body {
+	background-color: #5F5757;
+}
+
+h1 {
+	text-align: center;
+	color: white;
+	opacity: 0.6;
+}
+
+#contenedor {
+	background-color: #A25A5A;
+	width: 100%;
+	height: 70%;
+	padding-top: 80px;
+	display: flex;
+    justify-content: center;
+}
+
+#interactivo {
+	background-image: url("villa.jpg");
+	width: 800px;
+	height: 440px;
+	display: flex;
+	justify-content: center;
+}
+
+#graficos {
+	/*background-color: gray;*/  /*referencia*/
+	/*opacity: 0.8;*/            /*referencia*/
+	width: 400px;
+	height: 440px;
+	margin: auto;
+	float: right;
+}
+
+#formulario {
+	/*background-color: green;*/  /*referencia*/
+	/*opacity: 0.4;*/         /*referencia*/
+	width: 400px;
+	height: 407px;
+	margin: auto;
+	float: left;
+	padding: 17px;
+}
+
+#menu_1 {
+	padding: 16px;
+}
+
+#instagram_logo {
+	padding: 10px;
+	margin: auto;
+	float: left;
+}
+
+#instagram_logo:hover {
+	opacity: 0.4;
+}
+
+p {
+	margin: auto;
+	padding: 15px;
+}
+
+.boton {
+	padding: 15px; 
+	border: solid 3px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #fff;
+}
+
+#inicio {
+	background-color: #77f;
+	border-color: #66f;
+	border-radius: 10px;
+}
+
+#inicio:hover {
+	background-color: #66f;
+	border-color: #55f;
+}
+
+#eleccion {
+	background-color: #77f;
+	border-color: #66f;
+	border-radius: 10px;
+}
+
+#eleccion:hover {
+	background-color: #66f;
+	border-color: #55f;
+}
+
+#reset {
+	background-color: #f77;
+	border-color: #f66;
+	border-radius: 10px;
+}
+
+#reset:hover {
+	background-color: #f66;
+	border-color: #f55;
+}
+
+#agregar {
+	background-color: #888;
+	border-color: #777;
+	border-radius: 10px;
+}
+
+#agregar:hover {
+	background-color: #777;
+	border-color: #666;
+}
+
+#input {
+	padding: 15px;
+	border: solid 3px;
+	border-color: #777;
+	border-radius: 10px;
+}
+
+#mostrar {
+	width: 365px;
+	background-color: #888;
+	border-color: #777;
+	border-radius: 10px;
+}
+
+#mostrar:hover {
+	background-color: #777;
+	border-color: #666;
+}
+
+#lista_texto {
+	width: 365px;
+	height: 190;
+}

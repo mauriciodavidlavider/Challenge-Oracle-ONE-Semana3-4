@@ -1,0 +1,281 @@
+
+<html> 
+
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Juego de ahorcados</title>
+		<link rel="stylesheet" href="index.css" type="text/css" />
+	</head>
+
+	<body>
+		<h1>Juego del ahorcado con Alura Latam</h1>	
+
+		<div id="contenedor">	
+			<div id="interactivo">
+				<div id="formulario">
+					<button id="eleccion" class="boton">Generar palabra</button>
+					<button id="inicio" class="boton">Iniciar Juego</button>
+					<button id="reset" class="boton">Reset</button>
+					<br>
+					<br>
+					<input id="input" placeholder="Palabra nueva" />
+					<button id="agregar" class="boton">Agregar Palabra</button>
+					<hr />
+					<button id="mostrar" class="boton">Mostrar palabras</button>
+					<br>
+					<br>
+					<textarea id="lista_texto"></textarea>
+				</div>
+
+				<div id="graficos">
+					<canvas width="400" height="440"></canvas>
+				</div>
+		    </div>
+		</div>
+
+	    <a href="https://www.instagram.com/mauriciolavider/?hl=es-la"><img id="instagram_logo" src="instagram_logo.png" height ="30" width="30" /></a>
+	    <p><b>By Mauricio Estrella</b></p>
+	</body>
+
+	<script>
+		var grafico = document.querySelector("canvas");
+		var pincel = grafico.getContext("2d");
+		pincel.font="bold italic 25px arial";
+
+        letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        palabras = ["CABALLO", "ELEFANTE", "RELOJ", "ROBOT", "ALURA", "PROGRAMACION", "REFRESCO", "TECLADO", "GUITARRA", "CUADERNO", "PIANO", "TENIS", "GOLF", "ABRIGO", "CABALLO", "NIÑO", "NIÑA", "OJO", "PARASITO", "HOJA"];
+        eleccion = "";    
+        letra = "";
+        letrasEquivocadas = [];
+        var errores = 0;
+        activo = false;
+        var contador = 0;
+
+        function limpiar_escenario(){
+        	pincel.clearRect(0, 0, 400, 440);
+			pincel.fillStyle = "rgba(200, 200, 200, 0.5)";
+			pincel.fillRect(0, 0, 400, 440);
+			pincel.fillStyle = "black";
+        }
+
+		function graficar_escenario(){   
+			pincel.clearRect(0, 0, 400, 440);
+			pincel.fillStyle = "rgba(200, 200, 200, 0.5)";
+			pincel.fillRect(0, 0, 400, 440);
+			pincel.fillStyle = "black";
+        	pincel.fillRect(80, 280, 130, 25);
+        	pincel.fillRect(130, 44, 10, 240);
+        	pincel.fillRect(130, 44, 130, 10);
+        	pincel.fillRect(250, 44, 10, 40);
+		}
+
+		function generar_lineas(){
+			//genrar lineas
+			//letrasEquivocadas = [];
+			//errores = 0;
+			//contador = 0;
+			//graficar_escenario();
+			var cantidad = eleccion.length;
+			var mitad = 200-((cantidad*30)/2);
+        	for(var i=0; i<cantidad; i++){
+        		pincel.fillRect((i*30)+mitad, 380, 25, 5);
+        	}
+		}
+
+		function elegir_palabra(){
+			lista_texto.value = "..."
+			eleccion = palabras[Math.floor(Math.random()*palabras.length)];
+			activo = false;
+			limpiar_escenario();
+			generar_lineas();
+		}
+
+		function iniciar_juego(){
+			if(eleccion != ""){
+				lista_texto.value = "..."
+				letrasEquivocadas = [];
+				errores = 0;
+				contador = 0;
+				activo = true;
+				graficar_escenario();
+				generar_lineas();
+			}
+			else{
+				lista_texto.value = "Genere una palabra antes de iniciar..."
+			}
+		}
+
+		function reseteo(){
+			lista_texto.value = "..."
+			limpiar_escenario();
+			activo = false;
+			eleccion = "";
+		}
+
+		function dibujar_letra_correcta(i, l){
+			var cantidad = eleccion.length;
+			var mitad = 200-((cantidad*30)/2);
+        	pincel.fillText(l, (mitad+(i*30))+5, 375)
+		}
+
+		function dibujar_letra_incorrecta(l){
+			pincel.fillStyle = "red";
+        	pincel.fillText(l, 360, (errores*30)+5)
+        	pincel.fillStyle = "black";
+		}
+
+		function dibujar_horca(errores){
+			switch(errores){
+				case 1:
+					pincel.beginPath();
+					pincel.arc(255, 95, 25, 0, 2*3.14);    //X, Y, diametro, angulo inicial, angulo final     
+					pincel.fill();
+					break;
+				case 2:
+					pincel.fillRect(250, 95, 9, 110);    
+					break;
+				case 3:
+				    pincel.lineWidth = 5;
+					pincel.beginPath();                    //desplazar en el canvas
+					pincel.moveTo(250, 130);               //mover cursor 
+					pincel.lineTo(200, 120); 
+					pincel.stroke();
+					break;
+				case 4:
+				    pincel.lineWidth = 5;
+					pincel.beginPath();                    //desplazar en el canvas
+					pincel.moveTo(250, 130);               //mover cursor 
+					pincel.lineTo(300, 120); 
+					pincel.stroke();
+					break;
+				case 5:
+				    pincel.lineWidth = 5;
+					pincel.beginPath();                    //desplazar en el canvas
+					pincel.moveTo(251, 203);               //mover cursor 
+					pincel.lineTo(200, 230); 
+					pincel.stroke();
+					break;
+				case 6:
+				    pincel.lineWidth = 5;
+					pincel.beginPath();                    //desplazar en el canvas
+					pincel.moveTo(250, 203);               //mover cursor 
+					pincel.lineTo(300, 230); 
+					pincel.stroke();
+					break;
+			}			
+		}
+
+		function verificar_final(){
+        	if(errores >= 6){
+        		activo = false;
+        		limpiar_escenario();
+            	fin_juego(); 
+            	lista_texto.value = eleccion;
+        	}
+		}
+
+		function fin_juego(){
+			pincel.fillStyle = "red";
+        	pincel.fillText("¡Fin del juego!", 100, 220);
+		}
+
+		function verificar_ganador(){
+			if(contador >= eleccion.length){
+				activo = false;
+				limpiar_escenario();
+				fin_ganador();
+			} 
+		}
+
+		function fin_ganador(){
+			pincel.fillStyle = "#0f0";
+        	pincel.fillText("¡Ganaste, felicidades!", 80, 220);
+		}
+
+		window.onload = function() { 
+			document.onkeypress = datos_entrada;
+		}
+
+		function verificar_palabra(){
+            encontrada = false;
+			for(var i=0; i<eleccion.length; i++){
+				if(eleccion[i]==letra){
+					encontrada = true;
+					contador += 1;
+					dibujar_letra_correcta(i, eleccion[i]);
+					verificar_ganador();
+				}
+			}
+			if(encontrada==false){
+				repetidas();
+			}
+		}
+
+		function repetidas(){
+			repetida = false;
+			for(var j=0; j<letrasEquivocadas.length; j++){
+				if(letra==letrasEquivocadas[j]){
+					repetida = true;
+				}
+			}
+			if(repetida){
+			}
+			else{
+				errores += 1;
+				letrasEquivocadas.push(letra);
+				dibujar_letra_incorrecta(letra);
+	        	dibujar_horca(errores);
+	        	verificar_final();
+			}
+		}
+
+		function datos_entrada(evObject){
+			letra = ""
+			caracter = ""
+            caracter = String.fromCharCode(evObject.which); 
+            caracter = caracter.toUpperCase()
+            for(var i=0; i<letras.length; i++){
+            	if(letras[i]==caracter){
+            		letra = caracter;
+            		if(activo){
+            			verificar_palabra();
+            		}
+            	}
+            }      
+		}
+
+		function agregar_palabra(){
+			if((palabra_entrada.value != "")&&(palabra_entrada.value.length<13)){
+				palabras.push(palabra_entrada.value.toUpperCase());
+			}
+		}
+
+		function mostrar_texto(){
+			lista_texto.value = palabras;
+		}
+
+		lista_texto = document.querySelector("#lista_texto");
+	    lista_texto.value = "..."
+
+		limpiar_escenario()
+
+		var palabra_entrada = document.querySelector("#input");
+		palabra_entrada = ""
+
+		var b_inicio = document.querySelector("#inicio");
+        b_inicio.onclick = iniciar_juego;
+
+        var b_inicio = document.querySelector("#reset");
+        b_inicio.onclick = reseteo;
+
+		var b_eleccion = document.querySelector("#eleccion");
+        b_eleccion.onclick = elegir_palabra;
+
+        var b_agregar = document.querySelector("#agregar");
+        b_agregar.onclick = agregar_palabra;
+
+        var mostrar = document.querySelector("#mostrar");
+        mostrar.onclick = mostrar_texto;
+	</script>
+
+</html>
